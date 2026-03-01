@@ -45,9 +45,9 @@
             <h2 class="text-2xl font-bold">Índices das Pastas</h2>
         </header>
 
-        <!-- Controles -->
+        <!-- Controlos -->
         <div class="bg-[#053D47] rounded-xl p-4 shadow-2xl border border-white/10 mb-4">
-            <!-- Barra de Busca -->
+            <!-- Barra de Procura -->
             <div class="relative mb-4">
                 <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
                 <input 
@@ -65,6 +65,7 @@
                 <button data-folder="2" class="filter-btn px-3 py-1.5 rounded-md bg-[#00111B] border border-white/10 text-[10px] font-bold uppercase transition-all">P2</button>
                 <button data-folder="3" class="filter-btn px-3 py-1.5 rounded-md bg-[#00111B] border border-white/10 text-[10px] font-bold uppercase transition-all">P3</button>
                 <button data-folder="4" class="filter-btn px-3 py-1.5 rounded-md bg-[#00111B] border border-white/10 text-[10px] font-bold uppercase transition-all">P4</button>
+                <button data-folder="Natal" class="filter-btn px-3 py-1.5 rounded-md bg-[#00111B] border border-white/10 text-[10px] font-bold uppercase transition-all">Natal</button>
             </div>
         </div>
 
@@ -75,7 +76,7 @@
         </div>
 
         <div id="index-list" class="space-y-1 max-h-[65vh] overflow-y-auto pr-2 custom-scrollbar">
-            <!-- As músicas serão inseridas aqui -->
+            <!-- As músicas serão inseridas aqui via JS -->
         </div>
 
         <!-- Rodapé -->
@@ -85,188 +86,234 @@
     </div>
 
     <script>
-        // Dados das Pastas
+        // Dados das Pastas (Incluindo a nova pasta de Natal)
         const songs = [
             // Pasta 1
-            { name: "Alegre, em Paz, Agora Irei", code: "P1-21", folder: 1 },
-            { name: "Aleluia, Aleluia! Graças ao Cristo Vivo!", code: "P1-35", folder: 1 },
-            { name: "Alguém à Tua Porta Está", code: "P1-20", folder: 1 },
-            { name: "Avante, Avante, ó Crentes", code: "P1-04", folder: 1 },
-            { name: "Bem Alto a Cruz de Cristo Erguei", code: "P1-24", folder: 1 },
-            { name: "Bem-aventurança", code: "P1-05", folder: 1 },
-            { name: "Bênção Aaraônica", code: "P1-36", folder: 1 },
-            { name: "Bendize, ó Minha Alma", code: "P1-06", folder: 1 },
-            { name: "Canto de Esperança", code: "P1-37", folder: 1 },
-            { name: "Deus, Somente Deus", code: "P1-16", folder: 1 },
-            { name: "Em Cristo Eu Tenho Abrigo", code: "P1-19", folder: 1 },
-            { name: "Em Cristo Seja o Lar Edificado", code: "P1-32", folder: 1 },
-            { name: "Entrada Festiva", code: "P1-39", folder: 1 },
-            { name: "Glória e Louvor", code: "P1-22", folder: 1 },
-            { name: "Graças a Ti, Senhor", code: "P1-08", folder: 1 },
-            { name: "Grandioso és Tu", code: "P1-09", folder: 1 },
-            { name: "Jesus Ressuscitou!", code: "P1-38", folder: 1 },
-            { name: "Jesus, Alegria dos Homens", code: "P1-13", folder: 1 },
-            { name: "Maranata!", code: "P1-30", folder: 1 },
-            { name: "Maravilhoso Amor", code: "P1-25", folder: 1 },
-            { name: "Mensagem Maravilhosa", code: "P1-34", folder: 1 },
-            { name: "Nada é Impossível", code: "P1-29", folder: 1 },
-            { name: "O Apelo de Jesus", code: "P1-02", folder: 1 },
-            { name: "O Caminho de Sião", code: "P1-10", folder: 1 },
-            { name: "O Meu Pastor é o Bom Jesus", code: "P1-07", folder: 1 },
-            { name: "O Nome do Salvador", code: "P1-28", folder: 1 },
-            { name: "O Santo Espírito", code: "P1-17", folder: 1 },
-            { name: "Olhe ao Redor", code: "P1-41", folder: 1 },
-            { name: "Pai Nosso (1)", code: "P1-11", folder: 1 },
-            { name: "Pai Nosso (2)", code: "P1-15", folder: 1 },
-            { name: "Qual Pai Bondoso", code: "P1-03", folder: 1 },
-            { name: "Redenção", code: "P1-23", folder: 1 },
-            { name: "Reina Deus", code: "P1-31", folder: 1 },
-            { name: "Sacrifício de Louvor", code: "P1-27", folder: 1 },
-            { name: "Santo", code: "P1-33", folder: 1 },
-            { name: "Se de Todo o Coração Me Buscardes", code: "P1-40", folder: 1 },
-            { name: "Se Estou Sozinho", code: "P1-26", folder: 1 },
-            { name: "Sossegai!", code: "P1-12", folder: 1 },
-            { name: "Toda Carne é Como a Flor", code: "P1-01", folder: 1 },
-            { name: "Uma Linda Melodia Deves Ter", code: "P1-14", folder: 1 },
-            { name: "Vem-nos Despedir", code: "P1-18", folder: 1 },
+            { name: "Alegre, em Paz, Agora Irei", code: "P1-21", folder: "1" },
+            { name: "Aleluia, Aleluia! Graças ao Cristo Vivo!", code: "P1-35", folder: "1" },
+            { name: "Alguém à Tua Porta Está", code: "P1-20", folder: "1" },
+            { name: "Avante, Avante, ó Crentes", code: "P1-04", folder: "1" },
+            { name: "Bem Alto a Cruz de Cristo Erguei", code: "P1-24", folder: "1" },
+            { name: "Bem-aventurança", code: "P1-05", folder: "1" },
+            { name: "Bênção Aaraônica", code: "P1-36", folder: "1" },
+            { name: "Bendize, ó Minha Alma", code: "P1-06", folder: "1" },
+            { name: "Canto de Esperança", code: "P1-37", folder: "1" },
+            { name: "Deus, Somente Deus", code: "P1-16", folder: "1" },
+            { name: "Em Cristo Eu Tenho Abrigo", code: "P1-19", folder: "1" },
+            { name: "Em Cristo Seja o Lar Edificado", code: "P1-32", folder: "1" },
+            { name: "Entrada Festiva", code: "P1-39", folder: "1" },
+            { name: "Glória e Louvor", code: "P1-22", folder: "1" },
+            { name: "Graças a Ti, Senhor", code: "P1-08", folder: "1" },
+            { name: "Grandioso és Tu", code: "P1-09", folder: "1" },
+            { name: "Jesus Ressuscitou!", code: "P1-38", folder: "1" },
+            { name: "Jesus, Alegria dos Homens", code: "P1-13", folder: "1" },
+            { name: "Maranata!", code: "P1-30", folder: "1" },
+            { name: "Maravilhoso Amor", code: "P1-25", folder: "1" },
+            { name: "Mensagem Maravilhosa", code: "P1-34", folder: "1" },
+            { name: "Nada é Impossível", code: "P1-29", folder: "1" },
+            { name: "O Apelo de Jesus", code: "P1-02", folder: "1" },
+            { name: "O Caminho de Sião", code: "P1-10", folder: "1" },
+            { name: "O Meu Pastor é o Bom Jesus", code: "P1-07", folder: "1" },
+            { name: "O Nome do Salvador", code: "P1-28", folder: "1" },
+            { name: "O Santo Espírito", code: "P1-17", folder: "1" },
+            { name: "Olhe ao Redor", code: "P1-41", folder: "1" },
+            { name: "Pai Nosso (1)", code: "P1-11", folder: "1" },
+            { name: "Pai Nosso (2)", code: "P1-15", folder: "1" },
+            { name: "Qual Pai Bondoso", code: "P1-03", folder: "1" },
+            { name: "Redenção", code: "P1-23", folder: "1" },
+            { name: "Reina Deus", code: "P1-31", folder: "1" },
+            { name: "Sacrifício de Louvor", code: "P1-27", folder: "1" },
+            { name: "Santo", code: "P1-33", folder: "1" },
+            { name: "Se de Todo o Coração Me Buscardes", code: "P1-40", folder: "1" },
+            { name: "Se Estou Sozinho", code: "P1-26", folder: "1" },
+            { name: "Sossegai!", code: "P1-12", folder: "1" },
+            { name: "Toda Carne é Como a Flor", code: "P1-01", folder: "1" },
+            { name: "Uma Linda Melodia Deves Ter", code: "P1-14", folder: "1" },
+            { name: "Vem-nos Despedir", code: "P1-18", folder: "1" },
 
             // Pasta 2
-            { name: "A Causa é Tua", code: "P2-42", folder: 2 },
-            { name: "A Deus Cantai Louvor", code: "P2-37", folder: 2 },
-            { name: "A Luta Contra o Mal", code: "P2-12", folder: 2 },
-            { name: "A Nova Luz", code: "P2-16", folder: 2 },
-            { name: "A Rocha dos Séculos", code: "P2-04", folder: 2 },
-            { name: "Alegria da Páscoa", code: "P2-21", folder: 2 },
-            { name: "Altamente os Céus Proclamam", code: "P2-17", folder: 2 },
-            { name: "Atribulado Coração", code: "P2-34", folder: 2 },
-            { name: "Bendita Paz", code: "P2-24", folder: 2 },
-            { name: "Bendize, Ó Tu, Minha Alma!", code: "P2-08", folder: 2 },
-            { name: "Crê no Senhor!", code: "P2-28", folder: 2 },
-            { name: "Cristo Te Chama", code: "P2-27", folder: 2 },
-            { name: "Cristo Vai Passar", code: "P2-26", folder: 2 },
-            { name: "De Joelhos Partamos Nosso Pão", code: "P2-46", folder: 2 },
-            { name: "Descansa, ó Alma", code: "P2-23", folder: 2 },
-            { name: "Doce é Pensar em Ti", code: "P2-47", folder: 2 },
-            { name: "Doxologia", code: "P2-13", folder: 2 },
-            { name: "Ele é Jeová", code: "P2-51", folder: 2 },
-            { name: "Faz Deus Seus Feitos", code: "P2-20", folder: 2 },
-            { name: "Faze uma Bênção de Mim, Senhor", code: "P2-22", folder: 2 },
-            { name: "Fugi Tristeza e Horror", code: "P2-48", folder: 2 },
-            { name: "Glória pra Mim", code: "P2-14", folder: 2 },
-            { name: "Glorificação", code: "P2-40", folder: 2 },
-            { name: "Grande é o Senhor", code: "P2-31", folder: 2 },
-            { name: "Honra e Glória ao Cordeiro", code: "P2-09", folder: 2 },
-            { name: "Jerusalém", code: "P2-32", folder: 2 },
-            { name: "Jesus Tão Belo", code: "P2-29", folder: 2 },
-            { name: "Justo és, Senhor", code: "P2-11", folder: 2 },
-            { name: "Largo", code: "P2-30", folder: 2 },
-            { name: "Louvai a Deus, Senhor", code: "P2-50", folder: 2 },
-            { name: "Mais Perto, Meu Deus, de Ti", code: "P2-05", folder: 2 },
-            { name: "Maravilhosa Graça", code: "P2-06", folder: 2 },
-            { name: "Nunca, Meu Mestre", code: "P2-15", folder: 2 },
-            { name: "Ó Fronte Ensanguentada", code: "P2-41", folder: 2 },
-            { name: "O Lar Ditoso", code: "P2-33", folder: 2 },
-            { name: "O Meu Guia", code: "P2-38", folder: 2 },
-            { name: "O Reino de Deus na Terra", code: "P2-07", folder: 2 },
-            { name: "O Senhor é Meu Pastor", code: "P2-36", folder: 2 },
-            { name: "Oração (2)", code: "P2-43", folder: 2 },
-            { name: "Oração", code: "P2-01", folder: 2 },
-            { name: "Os Céus Declaram a Glória de Deus", code: "P2-02", folder: 2 },
-            { name: "Os Que Confiam", code: "P2-25", folder: 2 },
-            { name: "Ouvindo de Jesus", code: "P2-35", folder: 2 },
-            { name: "Povo Santo", code: "P2-52", folder: 2 },
-            { name: "Quão Formosa É", code: "P2-53", folder: 2 },
-            { name: "Quem São Estes?", code: "P2-44", folder: 2 },
-            { name: "Redenção", code: "P2-45", folder: 2 },
-            { name: "Ressoa o Clamor Divinal", code: "P2-03", folder: 2 },
-            { name: "Ressurgiu", code: "P2-19", folder: 2 },
-            { name: "Ressurreição", code: "P2-18", folder: 2 },
-            { name: "Salmo 100", code: "P2-49", folder: 2 },
-            { name: "Se Mais Eu Pudesse, Meu Deus, Te Amar", code: "P2-10", folder: 2 },
-            { name: "Se Meu Povo Orar", code: "P2-54", folder: 2 },
-            { name: "Senhor Jesus", code: "P2-39", folder: 2 },
+            { name: "A Causa é Tua", code: "P2-42", folder: "2" },
+            { name: "A Deus Cantai Louvor", code: "P2-37", folder: "2" },
+            { name: "A Luta Contra o Mal", code: "P2-12", folder: "2" },
+            { name: "A Nova Luz", code: "P2-16", folder: "2" },
+            { name: "A Rocha dos Séculos", code: "P2-04", folder: "2" },
+            { name: "Alegria da Páscoa", code: "P2-21", folder: "2" },
+            { name: "Altamente os Céus Proclamam", code: "P2-17", folder: "2" },
+            { name: "Atribulado Coração", code: "P2-34", folder: "2" },
+            { name: "Bendita Paz", code: "P2-24", folder: "2" },
+            { name: "Bendize, Ó Tu, Minha Alma!", code: "P2-08", folder: "2" },
+            { name: "Crê no Senhor!", code: "P2-28", folder: "2" },
+            { name: "Cristo Te Chama", code: "P2-27", folder: "2" },
+            { name: "Cristo Vai Passar", code: "P2-26", folder: "2" },
+            { name: "De Joelhos Partamos Nosso Pão", code: "P2-46", folder: "2" },
+            { name: "Descansa, ó Alma", code: "P2-23", folder: "2" },
+            { name: "Doce é Pensar em Ti", code: "P2-47", folder: "2" },
+            { name: "Doxologia", code: "P2-13", folder: "2" },
+            { name: "Ele é Jeová", code: "P2-51", folder: "2" },
+            { name: "Faz Deus Seus Feitos", code: "P2-20", folder: "2" },
+            { name: "Faze uma Bênção de Mim, Senhor", code: "P2-22", folder: "2" },
+            { name: "Fugi Tristeza e Horror", code: "P2-48", folder: "2" },
+            { name: "Glória pra Mim", code: "P2-14", folder: "2" },
+            { name: "Glorificação", code: "P2-40", folder: "2" },
+            { name: "Grande é o Senhor", code: "P2-31", folder: "2" },
+            { name: "Honra e Glória ao Cordeiro", code: "P2-09", folder: "2" },
+            { name: "Jerusalém", code: "P2-32", folder: "2" },
+            { name: "Jesus Tão Belo", code: "P2-29", folder: "2" },
+            { name: "Justo és, Senhor", code: "P2-11", folder: "2" },
+            { name: "Largo", code: "P2-30", folder: "2" },
+            { name: "Louvai a Deus, Senhor", code: "P2-50", folder: "2" },
+            { name: "Mais Perto, Meu Deus, de Ti", code: "P2-05", folder: "2" },
+            { name: "Maravilhosa Graça", code: "P2-06", folder: "2" },
+            { name: "Nunca, Meu Mestre", code: "P2-15", folder: "2" },
+            { name: "Ó Fronte Ensanguentada", code: "P2-41", folder: "2" },
+            { name: "O Lar Ditoso", code: "P2-33", folder: "2" },
+            { name: "O Meu Guia", code: "P2-38", folder: "2" },
+            { name: "O Reino de Deus na Terra", code: "P2-07", folder: "2" },
+            { name: "O Senhor é Meu Pastor", code: "P2-36", folder: "2" },
+            { name: "Oração (2)", code: "P2-43", folder: "2" },
+            { name: "Oração", code: "P2-01", folder: "2" },
+            { name: "Os Céus Declaram a Glória de Deus", code: "P2-02", folder: "2" },
+            { name: "Os Que Confiam", code: "P2-25", folder: "2" },
+            { name: "Ouvindo de Jesus", code: "P2-35", folder: "2" },
+            { name: "Povo Santo", code: "P2-52", folder: "2" },
+            { name: "Quão Formosa É", code: "P2-53", folder: "2" },
+            { name: "Quem São Estes?", code: "P2-44", folder: "2" },
+            { name: "Redenção", code: "P2-45", folder: "2" },
+            { name: "Ressoa o Clamor Divinal", code: "P2-03", folder: "2" },
+            { name: "Ressurgiu", code: "P2-19", folder: "2" },
+            { name: "Ressurreição", code: "P2-18", folder: "2" },
+            { name: "Salmo 100", code: "P2-49", folder: "2" },
+            { name: "Se Mais Eu Pudesse, Meu Deus, Te Amar", code: "P2-10", folder: "2" },
+            { name: "Se Meu Povo Orar", code: "P2-54", folder: "2" },
+            { name: "Senhor Jesus", code: "P2-39", folder: "2" },
 
             // Pasta 3
-            { name: "A Última Ceia", code: "P3-11", folder: 3 },
-            { name: "Adorai o Rei da Glória", code: "P3-32", folder: 3 },
-            { name: "Agnus Dei | Vinde Adoremos", code: "P3-12", folder: 3 },
-            { name: "Amou-me", code: "P3-18", folder: 3 },
-            { name: "Asas da Alva", code: "P3-16", folder: 3 },
-            { name: "Bênção", code: "P3-24", folder: 3 },
-            { name: "Bênção Coral", code: "P3-04", folder: 3 },
-            { name: "Clamo a Deus!", code: "P3-29", folder: 3 },
-            { name: "Com o Som de Trombetas", code: "P3-03", folder: 3 },
-            { name: "Compartilhai", code: "P3-10", folder: 3 },
-            { name: "Cordeiro de Deus", code: "P3-05", folder: 3 },
-            { name: "De Uma Terra Ouvi!", code: "P3-34", folder: 3 },
-            { name: "É Maravilhoso Crer", code: "P3-14", folder: 3 },
-            { name: "Fortalece a Tua Igreja", code: "P3-07", folder: 3 },
-            { name: "Gratidão", code: "P3-17", folder: 3 },
-            { name: "Há Alguém Orando por Ti", code: "P3-13", folder: 3 },
-            { name: "Haja Paz na Terra", code: "P3-30", folder: 3 },
-            { name: "Hino ao Jubileu", code: "P3-33", folder: 3 },
-            { name: "Jesus, o Bom Pastor", code: "P3-06", folder: 3 },
-            { name: "Justo, Senhor, Tu és Justo", code: "P3-01", folder: 3 },
-            { name: "Minha Gratidão", code: "P3-19", folder: 3 },
-            { name: "O Amor de Deus", code: "P3-08", folder: 3 },
-            { name: "O Amor do Calvário", code: "P3-25", folder: 3 },
-            { name: "O Senhor Está Aqui", code: "P3-28", folder: 3 },
-            { name: "O Socorro do Crente", code: "P3-20", folder: 3 },
-            { name: "Pai Nosso (3)", code: "P3-26", folder: 3 },
-            { name: "Proclame a Glória do Senhor", code: "P3-02", folder: 3 },
-            { name: "Quando o Espírito Me Chama", code: "P3-21", folder: 3 },
-            { name: "Quanta Alegria!", code: "P3-09", folder: 3 },
-            { name: "Que a Luz de Cristo Brilhe", code: "P3-27", folder: 3 },
-            { name: "Salmo 117", code: "P3-23", folder: 3 },
-            { name: "Salmo 142", code: "P3-15", folder: 3 },
-            { name: "Shalom", code: "P3-22", folder: 3 },
-            { name: "Um Sacrifício Aceitável a Deus", code: "P3-31", folder: 3 },
+            { name: "A Última Ceia", code: "P3-11", folder: "3" },
+            { name: "Adorai o Rei da Glória", code: "P3-32", folder: "3" },
+            { name: "Agnus Dei | Vinde Adoremos", code: "P3-12", folder: "3" },
+            { name: "Amou-me", code: "P3-18", folder: "3" },
+            { name: "Asas da Alva", code: "P3-16", folder: "3" },
+            { name: "Bênção", code: "P3-24", folder: "3" },
+            { name: "Bênção Coral", code: "P3-04", folder: "3" },
+            { name: "Clamo a Deus!", code: "P3-29", folder: "3" },
+            { name: "Com o Som de Trombetas", code: "P3-03", folder: "3" },
+            { name: "Compartilhai", code: "P3-10", folder: "3" },
+            { name: "Cordeiro de Deus", code: "P3-05", folder: "3" },
+            { name: "De Uma Terra Ouvi!", code: "P3-34", folder: "3" },
+            { name: "É Maravilhoso Crer", code: "P3-14", folder: "3" },
+            { name: "Fortalece a Tua Igreja", code: "P3-07", folder: "3" },
+            { name: "Gratidão", code: "P3-17", folder: "3" },
+            { name: "Há Alguém Orando por Ti", code: "P3-13", folder: "3" },
+            { name: "Haja Paz na Terra", code: "P3-30", folder: "3" },
+            { name: "Hino ao Jubileu", code: "P3-33", folder: "3" },
+            { name: "Jesus, o Bom Pastor", code: "P3-06", folder: "3" },
+            { name: "Justo, Senhor, Tu és Justo", code: "P3-01", folder: "3" },
+            { name: "Minha Gratidão", code: "P3-19", folder: "3" },
+            { name: "O Amor de Deus", code: "P3-08", folder: "3" },
+            { name: "O Amor do Calvário", code: "P3-25", folder: "3" },
+            { name: "O Senhor Está Aqui", code: "P3-28", folder: "3" },
+            { name: "O Socorro do Crente", code: "P3-20", folder: "3" },
+            { name: "Pai Nosso (3)", code: "P3-26", folder: "3" },
+            { name: "Proclame a Glória do Senhor", code: "P3-02", folder: "3" },
+            { name: "Quando o Espírito Me Chama", code: "P3-21", folder: "3" },
+            { name: "Quanta Alegria!", code: "P3-09", folder: "3" },
+            { name: "Que a Luz de Cristo Brilhe", code: "P3-27", folder: "3" },
+            { name: "Salmo 117", code: "P3-23", folder: "3" },
+            { name: "Salmo 142", code: "P3-15", folder: "3" },
+            { name: "Shalom", code: "P3-22", folder: "3" },
+            { name: "Um Sacrifício Aceitável a Deus", code: "P3-31", folder: "3" },
 
             // Pasta 4
-            { name: "A Cruz de Cristo Erguei", code: "P4-33", folder: 4 },
-            { name: "Adoração", code: "P4-29", folder: 4 },
-            { name: "Aleluia", code: "P4-35", folder: 4 },
-            { name: "Bênção Belmont", code: "P4-19", folder: 4 },
-            { name: "Buscai a Deus", code: "P4-14", folder: 4 },
-            { name: "Céu, Lindo Céu", code: "P4-01", folder: 4 },
-            { name: "Ciclo do Advento: Alegria", code: "P4-38", folder: 4 },
-            { name: "Ciclo do Advento: Esperança", code: "P4-37", folder: 4 },
-            { name: "Ciclo do Advento: Jesus Cristo", code: "P4-40", folder: 4 },
-            { name: "Ciclo do Advento: Luz", code: "P4-36", folder: 4 },
-            { name: "Ciclo do Advento: Paz", code: "P4-39", folder: 4 },
-            { name: "Creio em Deus", code: "P4-22", folder: 4 },
-            { name: "Deus ao Mundo Amou", code: "P4-02", folder: 4 },
-            { name: "Digno é o Cordeiro", code: "P4-08", folder: 4 },
-            { name: "Eu Louvarei ao Senhor", code: "P4-32", folder: 4 },
-            { name: "Grande é Jeová, Soberano dos Céus", code: "P4-31", folder: 4 },
-            { name: "Ide por Todo o Mundo!", code: "P4-21", folder: 4 },
-            { name: "Louva a Deus, ó Jerusalém", code: "P4-07", folder: 4 },
-            { name: "Louvemos a Deus", code: "P4-30", folder: 4 },
-            { name: "O Dom do Amor", code: "P4-20", folder: 4 },
-            { name: "Ó Povo Redimido", code: "P4-34", folder: 4 },
-            { name: "O Senhor é a Minha Luz", code: "P4-06", folder: 4 },
-            { name: "Oh! Dai Graças ao Senhor", code: "P4-26", folder: 4 },
-            { name: "Olha para o Céu", code: "P4-18", folder: 4 },
-            { name: "Os que Esperam Confiando no Senhor", code: "P4-12", folder: 4 },
-            { name: "Perdoado", code: "P4-05", folder: 4 },
-            { name: "Porque Vivo Está", code: "P4-10", folder: 4 },
-            { name: "Qual Mãe Consola um Filho Seu", code: "P4-28", folder: 4 },
-            { name: "Quão Bondoso Amigo é Cristo!", code: "P4-24", folder: 4 },
-            { name: "Rio Profundo", code: "P4-04", folder: 4 },
-            { name: "Salmo 121", code: "P4-13", folder: 4 },
-            { name: "Seu Plano, Meu", code: "P4-09", folder: 4 },
-            { name: "Tal Qual Estou", code: "P4-03", folder: 4 },
-            { name: "Tem Compaixão", code: "P4-23", folder: 4 },
-            { name: "Toca o Adufe, Tange as Cordas", code: "P4-17", folder: 4 },
-            { name: "Todo Teu Viver", code: "P4-15", folder: 4 },
-            { name: "Tu és Digno", code: "P4-27", folder: 4 },
-            { name: "Um só Rebanho", code: "P4-11", folder: 4 },
-            { name: "Uma Bênção Antiga", code: "P4-16", folder: 4 },
-            { name: "Vazia Aquela Tumba", code: "P4-25", folder: 4 }
+            { name: "A Cruz de Cristo Erguei", code: "P4-33", folder: "4" },
+            { name: "Adoração", code: "P4-29", folder: "4" },
+            { name: "Aleluia", code: "P4-35", folder: "4" },
+            { name: "Bênção Belmont", code: "P4-19", folder: "4" },
+            { name: "Buscai a Deus", code: "P4-14", folder: "4" },
+            { name: "Céu, Lindo Céu", code: "P4-01", folder: "4" },
+            { name: "Ciclo do Advento: Alegria", code: "P4-38", folder: "4" },
+            { name: "Ciclo do Advento: Esperança", code: "P4-37", folder: "4" },
+            { name: "Ciclo do Advento: Jesus Cristo", code: "P4-40", folder: "4" },
+            { name: "Ciclo do Advento: Luz", code: "P4-36", folder: "4" },
+            { name: "Ciclo do Advento: Paz", code: "P4-39", folder: "4" },
+            { name: "Creio em Deus", code: "P4-22", folder: "4" },
+            { name: "Deus ao Mundo Amou", code: "P4-02", folder: "4" },
+            { name: "Digno é o Cordeiro", code: "P4-08", folder: "4" },
+            { name: "Eu Louvarei ao Senhor", code: "P4-32", folder: "4" },
+            { name: "Grande é Jeová, Soberano dos Céus", code: "P4-31", folder: "4" },
+            { name: "Ide por Todo o Mundo!", code: "P4-21", folder: "4" },
+            { name: "Louva a Deus, ó Jerusalém", code: "P4-07", folder: "4" },
+            { name: "Louvemos a Deus", code: "P4-30", folder: "4" },
+            { name: "O Dom do Amor", code: "P4-20", folder: "4" },
+            { name: "Ó Povo Redimido", code: "P4-34", folder: "4" },
+            { name: "O Senhor é a Minha Luz", code: "P4-06", folder: "4" },
+            { name: "Oh! Dai Graças ao Senhor", code: "P4-26", folder: "4" },
+            { name: "Olha para o Céu", code: "P4-18", folder: "4" },
+            { name: "Os que Esperam Confiando no Senhor", code: "P4-12", folder: "4" },
+            { name: "Perdoado", code: "P4-05", folder: "4" },
+            { name: "Porque Vivo Está", code: "P4-10", folder: "4" },
+            { name: "Qual Mãe Consola um Filho Seu", code: "P4-28", folder: "4" },
+            { name: "Quão Bondoso Amigo é Cristo!", code: "P4-24", folder: "4" },
+            { name: "Rio Profundo", code: "P4-04", folder: "4" },
+            { name: "Salmo 121", code: "P4-13", folder: "4" },
+            { name: "Seu Plano, Meu", code: "P4-09", folder: "4" },
+            { name: "Tal Qual Estou", code: "P4-03", folder: "4" },
+            { name: "Tem Compaixão", code: "P4-23", folder: "4" },
+            { name: "Toca o Adufe, Tange as Cordas", code: "P4-17", folder: "4" },
+            { name: "Todo Teu Viver", code: "P4-15", folder: "4" },
+            { name: "Tu és Digno", code: "P4-27", folder: "4" },
+            { name: "Um só Rebanho", code: "P4-11", folder: "4" },
+            { name: "Uma Bênção Antiga", code: "P4-16", folder: "4" },
+            { name: "Vazia Aquela Tumba", code: "P4-25", folder: "4" },
+
+            // Pasta Natal
+            { name: "A Canção dos Sinos", code: "PNatal-28", folder: "Natal" },
+            { name: "Alegrai-vos", code: "PNatal-02", folder: "Natal" },
+            { name: "Anjos das Mansões de Glória", code: "PNatal-40", folder: "Natal" },
+            { name: "Anjos Vieram Anunciar", code: "PNatal-03", folder: "Natal" },
+            { name: "Boas Novas", code: "PNatal-23", folder: "Natal" },
+            { name: "Canção da Natividade", code: "PNatal-31", folder: "Natal" },
+            { name: "Cântico de Natal", code: "PNatal-05", folder: "Natal" },
+            { name: "Cobria a Neve o Chão", code: "PNatal-35", folder: "Natal" },
+            { name: "Deitado em Manjedoura", code: "PNatal-22", folder: "Natal" },
+            { name: "Do Tronco Rude (A Oferta Perfeita)", code: "PNatal-04", folder: "Natal" },
+            { name: "Eis dos Anjos a Harmonia", code: "PNatal-06", folder: "Natal" },
+            { name: "Exultem, Ó Povos", code: "PNatal-08", folder: "Natal" },
+            { name: "Glória", code: "PNatal-16", folder: "Natal" },
+            { name: "Jesus Nasceu", code: "PNatal-39", folder: "Natal" },
+            { name: "Maria de um Menino Foi a Mãe", code: "PNatal-37", folder: "Natal" },
+            { name: "Nasceu Maria", code: "PNatal-34", folder: "Natal" },
+            { name: "Nasceu o Messias", code: "PNatal-41", folder: "Natal" },
+            { name: "Nasceu o Redentor", code: "PNatal-33", folder: "Natal" },
+            { name: "Natal", code: "PNatal-20", folder: "Natal" },
+            { name: "Natal Brasileiro", code: "PNatal-19", folder: "Natal" },
+            { name: "Natalício de um Rei", code: "PNatal-09", folder: "Natal" },
+            { name: "No Céu Brilhou Fulgente Luz", code: "PNatal-14", folder: "Natal" },
+            { name: "No Humilde Presépio", code: "PNatal-26", folder: "Natal" },
+            { name: "Noite de Paz", code: "PNatal-11", folder: "Natal" },
+            { name: "Noite Feliz", code: "PNatal-24", folder: "Natal" },
+            { name: "Noite Jubilosa", code: "PNatal-10", folder: "Natal" },
+            { name: "Numa Noite Como as Outras", code: "PNatal-36", folder: "Natal" },
+            { name: "Numa Rude Estrebaria", code: "PNatal-29", folder: "Natal" },
+            { name: "Ó Noite Santa", code: "PNatal-25", folder: "Natal" },
+            { name: "O Primeiro Natal", code: "PNatal-01", folder: "Natal" },
+            { name: "Oh Vem, Emanuel", code: "PNatal-07", folder: "Natal" },
+            { name: "Pequena Vila de Belém", code: "PNatal-13", folder: "Natal" },
+            { name: "Povos, Cantai", code: "PNatal-18", folder: "Natal" },
+            { name: "Que Deus Vos Dê, Senhores", code: "PNatal-42", folder: "Natal" },
+            { name: "Que Vila É Essa", code: "PNatal-38", folder: "Natal" },
+            { name: "Quem É o Pequeno a Repousar (Que Infante É Este)", code: "PNatal-15", folder: "Natal" },
+            { name: "Quem Me Dera Ter Vivido", code: "PNatal-30", folder: "Natal" },
+            { name: "Rei dos Reis", code: "PNatal-32", folder: "Natal" },
+            { name: "Três Reis Magos", code: "PNatal-17", folder: "Natal" },
+            { name: "Tudo É Paz", code: "PNatal-27", folder: "Natal" },
+            { name: "Vinde, Fiéis", code: "PNatal-12", folder: "Natal" },
+            { name: "Vinde, Ó Pastores", code: "PNatal-21", folder: "Natal" }
         ];
 
+        // Ordenar alfabeticamente
         const sortedSongs = [...songs].sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'));
 
+        // Elementos DOM
         const searchInput = document.getElementById('search-input');
         const filterBtns = document.querySelectorAll('.filter-btn');
         const indexList = document.getElementById('index-list');
@@ -275,9 +322,12 @@
         let currentFolder = 'all';
         let currentSearch = '';
 
+        /**
+         * Renderiza a lista baseada no filtro e na procura.
+         */
         function render() {
             const filtered = sortedSongs.filter(song => {
-                const matchesFolder = currentFolder === 'all' || song.folder.toString() === currentFolder;
+                const matchesFolder = currentFolder === 'all' || song.folder === currentFolder;
                 const searchStr = `${song.name} ${song.code}`.toLowerCase();
                 const matchesSearch = searchStr.includes(currentSearch.toLowerCase());
                 return matchesFolder && matchesSearch;
@@ -294,7 +344,6 @@
             } else {
                 filtered.forEach(song => {
                     const card = document.createElement('div');
-                    // Reduzi o padding para py-2 e px-3
                     card.className = "song-card bg-[#053D47]/40 border-l-2 border-white/5 py-2 px-3 rounded-r-md transition-all flex items-center justify-between group";
                     card.innerHTML = `
                         <div class="flex-1 min-w-0 pr-4">
@@ -313,6 +362,7 @@
             resultsCount.textContent = `${filtered.length} músicas`;
         }
 
+        // Listeners
         searchInput.addEventListener('input', (e) => {
             currentSearch = e.target.value;
             render();
@@ -327,6 +377,7 @@
             });
         });
 
+        // Inicialização
         window.onload = render;
     </script>
 </body>
